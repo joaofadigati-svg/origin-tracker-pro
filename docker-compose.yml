@@ -1,0 +1,7 @@
+services:
+  tags-origens:
+    build: .
+    container_name: tags-origens
+    restart: unless-stopped
+    ports:
+      - "3000:80"
