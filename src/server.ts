@@ -8,15 +8,15 @@ const ADMIN_PASS = "!Claw2020";
 function checkAuth(request: Request): Response | null {
   const auth = request.headers.get("authorization") ?? "";
   if (auth.startsWith("Basic ")) {
-    const decoded = atob(auth.slice(6));
-    const [user, pass] = decoded.split(":");
+    const decoded = Buffer.from(auth.slice(6), "base64").toString("utf-8");
+    const colonIndex = decoded.indexOf(":");
+    const user = decoded.slice(0, colonIndex);
+    const pass = decoded.slice(colonIndex + 1);
     if (user === ADMIN_USER && pass === ADMIN_PASS) return null;
   }
   return new Response("Unauthorized", {
     status: 401,
-    headers: {
-      "WWW-Authenticate": 'Basic realm="Tags Origens"',
-    },
+    headers: { "WWW-Authenticate": 'Basic realm="Tags Origens"' },
   });
 }
 
