@@ -40,4 +40,4 @@ ENV PORT=4000
 # Script de inicializacao
 RUN echo -e "#!/bin/sh\nnginx\nnode /app/.output/server/index.mjs" > /start.sh && chmod +x /start.sh
 
-CMD ["/start.sh"]
+ENTRYPOINT ["/start.sh"]
